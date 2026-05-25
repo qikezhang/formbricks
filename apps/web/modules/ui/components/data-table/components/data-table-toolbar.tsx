@@ -56,8 +56,14 @@ export const DataTableToolbar = <T,>({
           <TooltipRenderer tooltipContent={t("common.refresh")} shouldRender={true}>
             <button
               onClick={async () => {
-                await onRefresh();
-                toast.success(t("common.data_refreshed_successfully"));
+                try {
+                  // 尝试调用异步刷新方法
+                  await onRefresh();
+                  toast.success(t("common.data_refreshed_successfully"));
+                } catch (error) {
+                  // 捕获异常并弹出错误提示，避免界面无响应或静默失败
+                  toast.error(t("common.something_went_wrong_please_try_again"));
+                }
               }}
               className="cursor-pointer rounded-md border bg-white hover:border-slate-400">
               <RefreshCcwIcon strokeWidth={1.5} className={cn("m-1 h-6 w-6 p-0.5")} />
