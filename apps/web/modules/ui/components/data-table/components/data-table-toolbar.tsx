@@ -57,11 +57,11 @@ export const DataTableToolbar = <T,>({
             <button
               onClick={async () => {
                 try {
-                  // 尝试调用异步刷新方法
+                  // Attempt to invoke the asynchronous refresh handler
                   await onRefresh();
                   toast.success(t("common.data_refreshed_successfully"));
                 } catch (error) {
-                  // 捕获异常并弹出错误提示，避免界面无响应或静默失败
+                  // Catch runtime errors to prevent silent failures and display i18n error toast
                   toast.error(t("common.something_went_wrong_please_try_again"));
                 }
               }}
