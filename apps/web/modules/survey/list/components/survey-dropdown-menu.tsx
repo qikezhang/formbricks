@@ -100,13 +100,14 @@ export const SurveyDropDownMenu = ({
         surveyId: survey.id,
         targetWorkspaceId: workspace.id,
       });
-      if (response?.data) {
+      if (response?.data && !response?.serverError) {
         toast.success(t("workspace.surveys.survey_duplicated_successfully"));
         await queryClient.invalidateQueries({ queryKey: surveyKeys.lists() });
         return;
       }
       toast.error(getFormattedErrorMessage(response));
     } catch (error) {
+      // Log error internally and notify user via error toast
       logger.error(error);
       toast.error(t("common.something_went_wrong_please_try_again"));
     } finally {
